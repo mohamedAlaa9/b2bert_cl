@@ -5,7 +5,7 @@ Handles dataset balancing and stage preparation
 
 import pandas as pd
 from sklearn.utils import resample
-
+from pathlib import Path
 
 # Dialect column definitions
 DIALECT_COLUMNS = [
@@ -116,6 +116,9 @@ def prepare_all_curriculum_stages(dataset, output_dir, stage_levels=None):
     Returns:
         List of paths to created stage files
     """
+    outdir = Path(output_dir)
+    outdir.mkdir(parents=True, exist_ok=True)
+
     if stage_levels is None:
         stage_levels = list(range(1, 16)) + [18]
     

@@ -230,7 +230,7 @@ class BertTrainer:
     def _save_predictions(self, predictions):
         """Save predictions to output file."""
         output_dir = f'./exp_{self.exp_num}'
-        output_file = "/home/ali.mekky/Documents/NLP/Project/Cross-Country-Dialectal-Arabic-Identification/output.txt"
+        output_file = "output.txt"
         os.makedirs(output_dir, exist_ok=True)
         
         with open(output_file, 'w') as f:

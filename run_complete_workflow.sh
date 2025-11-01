@@ -85,8 +85,8 @@ from prepare_data import prepare_curriculum_data
 
 try:
     stage_paths = prepare_curriculum_data(
-        dataset_path="/home/ali.mekky/Documents/NLP/B2Bert_refactored_code/gpt_data_v1.csv",
-        output_dir="/home/ali.mekky/Documents/NLP/B2Bert_refactored_code/CL_stages",
+        dataset_path="gpt_data_v1.csv",
+        output_dir="./CL_stages",
         computed_filter=True
     )
     print(f"Created {len(stage_paths)} curriculum stages")
