@@ -1,0 +1,8 @@
+# Ignore all folders starting with "exp"
+exp*/
+
+# Ignore all .csv files
+*.csv
+
+# Ignore folder named "NADI2024"
+NADI2024/
