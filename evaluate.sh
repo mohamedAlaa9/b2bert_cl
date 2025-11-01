@@ -2,9 +2,9 @@
 
 # Simple Evaluation Script
 
-SCORER="/home/ali.mekky/Documents/NLP/B2Bert_refactored_code/evaluation/NADI2024-ST1-Scorer.py"
-GOLD="/home/ali.mekky/Documents/NLP/B2Bert_refactored_code/evaluation/NADI2024_subtask1_dev2_gold.txt"
-PREDICTIONS="/home/ali.mekky/Documents/NLP/Project/Cross-Country-Dialectal-Arabic-Identification/output.txt"
+SCORER="./evaluation/NADI2024-ST1-Scorer.py"
+GOLD="./evaluation/NADI2024_subtask1_dev2_gold.txt"
+PREDICTIONS="output.txt"
 
 if [ -z "$PREDICTIONS" ]; then
     echo "Usage: $0 <predictions_file>"
