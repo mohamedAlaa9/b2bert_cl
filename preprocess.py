@@ -102,23 +102,23 @@ def final_eliminations(df, column_name = '#2_content'):
 
 
 # Load the TSV file into a DataFrame
-df_2021 = pd.read_csv("/home/ali.mekky/Documents/NLP/Project/NADI2024/subtask1/train/NADI2021-TWT.tsv", sep='\t')
+df_2021 = pd.read_csv("NADI2024/subtask1/train/NADI2021-TWT.tsv", sep='\t')
 
 # Clean the DataFrame
 df_cleaned = remove_at_https(df_2021)
 
 # Save the cleaned DataFrame to a new TSV file
-df_cleaned.to_csv("/home/ali.mekky/Documents/NLP/Project/NADI2024/subtask1/train/NADI2021-TWT_cleaned.tsv", sep='\t', index=False)
+df_cleaned.to_csv("NADI2024/subtask1/train/NADI2021-TWT_cleaned.tsv", sep='\t', index=False)
 
 
 # Combine the 3 datasets for training
-df_1 = pd.read_csv("/home/ali.mekky/Documents/NLP/Project/NADI2024/subtask1/train/NADI2020-TWT.tsv", sep='\t')
-df_2 = pd.read_csv("/home/ali.mekky/Documents/NLP/Project/NADI2024/subtask1/train/NADI2021-TWT_cleaned.tsv", sep='\t')
-df_3 = pd.read_csv("/home/ali.mekky/Documents/NLP/Project/NADI2024/subtask1/train/NADI2023-TWT.tsv", sep='\t')
+df_1 = pd.read_csv("NADI2024/subtask1/train/NADI2020-TWT.tsv", sep='\t')
+df_2 = pd.read_csv("NADI2024/subtask1/train/NADI2021-TWT_cleaned.tsv", sep='\t')
+df_3 = pd.read_csv("NADI2024/subtask1/train/NADI2023-TWT.tsv", sep='\t')
 dataset = pd.concat([df_1, df_2, df_3], ignore_index=True)
 dataset = final_eliminations(dataset)
 
 # Save the final DataFrame to a new TSV file
-dataset.to_csv("/home/ali.mekky/Documents/NLP/Project/NADI2024/subtask1/train/NADIcombined_cleaned.tsv", sep='\t', index=False)
+dataset.to_csv("NADI2024/subtask1/train/NADIcombined_cleaned.tsv", sep='\t', index=False)
 
 
