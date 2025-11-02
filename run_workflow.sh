@@ -4,13 +4,13 @@ set -euo pipefail
 # -------------------------
 # Configuration (edit here)
 # -------------------------
-EXP_NUM=4
+EXP_NUM=9
 START_STAGE=1
 END_STAGE=16
 EPOCHS=1
 BATCH_SIZE=24
 STAGE_0_EPOCHS=1
-DATASET_PATH="gpt_data_v1.csv"
+DATASET_PATH="gpt_data_v2.csv"
 
 # Toggle steps
 SKIP_DATA_PREP=false   # set to true to skip

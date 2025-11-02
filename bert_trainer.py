@@ -230,7 +230,7 @@ class BertTrainer:
     def _save_predictions(self, predictions):
         """Save predictions to output file."""
         output_dir = f'./exp_{self.exp_num}'
-        output_file = "output.txt"
+        output_file = output_dir + "/output.txt"
         os.makedirs(output_dir, exist_ok=True)
         
         with open(output_file, 'w') as f:
