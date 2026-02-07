@@ -6,3 +6,13 @@ exp*/
 
 # Ignore folder named "NADI2024"
 NADI2024/
+
+CL*/
+baseline_stage1_gpt/
+stage1_gpt_balancing_loss_based/
+
+*.png
+*.pdf
+*.txt
+
+__pycache__/

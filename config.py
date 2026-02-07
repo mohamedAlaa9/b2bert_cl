@@ -33,7 +33,9 @@ class Config:
     
     # Model configuration
     DEFAULT_MODEL = "UBC-NLP/MARBERT"
-    ALTERNATIVE_MODEL = "CAMeL-Lab/bert-base-arabic-camelbert-ca"
+    # DEFAULT_MODEL = "UBC-NLP/MARBERTv2"
+
+    # DEFAULT_MODEL = "CAMeL-Lab/bert-base-arabic-camelbert-ca"
     
     # Dialect labels
     DIALECT_LABELS = [
@@ -62,6 +64,7 @@ class ExperimentConfig:
         self,
         exp_num,
         stage=0,
+        prev_stage = 1,
         model_name=None,
         threshold=None,
         batch_size=None,
@@ -85,20 +88,21 @@ class ExperimentConfig:
         self.threshold = threshold or Config.DEFAULT_THRESHOLD
         self.batch_size = batch_size or Config.DEFAULT_BATCH_SIZE
         self.epochs = epochs or Config.DEFAULT_EPOCHS
+        self.prev_stage = prev_stage
         
         # Determine model name
-        if use_previous_stage_model and stage > 1:
+        if use_previous_stage_model:
             self.model_name = self._get_previous_stage_model_path()
         else:
             self.model_name = model_name or Config.DEFAULT_MODEL
     
     def _get_previous_stage_model_path(self):
         """Get path to model from previous curriculum stage."""
-        return f"./exp_{self.exp_num}/stage_{self.stage - 1}"
+        return f"./exp_{self.exp_num}/stage_{self.prev_stage}"
     
     def get_dataset_path(self):
         """Get dataset path for current stage."""
-        stage_num = self.stage if self.stage < 16 else 18
+        stage_num = self.stage
         return Config.get_stage_path(stage_num)
     
     def get_output_dir(self):

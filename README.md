@@ -1,18 +1,19 @@
 # Curriculum Learning for Arabic Dialect Classification
 
 ## Overview
-This project implements curriculum learning for multi-label Arabic dialect classification using BERT models. The code has been reorganized for better modularity, maintainability, and clarity while preserving all original implementation details.
+This project implements curriculum learning for multi-label Arabic dialect classification using BERT models. The repo includes shell and Python entry points plus the training/data utilities used by those workflows.
 
 ## Project Structure
 
 ```
 .
-├── bert_trainer.py              # Main trainer class with model training logic
+├── run_workflow.sh              # Shell entry point with experiment configuration
+├── main.py                      # CLI entry point (data prep + training sequence)
+├── train.py                     # Training workflows (single stage / curriculum sequence)
+├── bert_trainer.py              # Trainer class with model training logic
 ├── data_utils.py                # Data preparation and curriculum stage creation
 ├── config.py                    # Configuration and path management
-├── main_training.py             # High-level training workflows
 ├── prepare_data.py              # Data preparation scripts
-├── curriculum_learning_notebook.ipynb  # Jupyter notebook with examples
 └── README.md                    # This file
 ```
 
@@ -53,12 +54,21 @@ Centralized configuration:
 - Easy modification of hyperparameters
 - Support for both pretrained and checkpoint models
 
-### `main_training.py`
+### `run_workflow.sh`
+Shell entry point that defines experiment settings and calls `main.py`.
+
+Key variables:
+- `EXP_NUM`, `START_STAGE`, `END_STAGE`, `EPOCHS`, `BATCH_SIZE`
+- `DATASET_PATH`, `ORDER`, `SEED`
+- `CL_BALANCING_METHOD` (1 = cardinality, 0 = aldi)
+
+### `main.py`
+CLI wrapper that runs data preparation and training sequence.
+
+### `train.py`
 High-level training workflows:
 - **`train_single_stage()`**: Train one curriculum stage
 - **`train_curriculum_sequence()`**: Train complete curriculum sequence
-- **`train_standalone_experiment()`**: Train standalone experiment
-
 ### `prepare_data.py`
 Data preparation scripts:
 - **`prepare_curriculum_data()`**: Create all curriculum stages from main dataset
@@ -67,23 +77,17 @@ Data preparation scripts:
 
 ## Usage Examples
 
-### 1. Train a Standalone Experiment
 
-```python
-from main_training import train_standalone_experiment
+### 1. Run Full Workflow (Shell)
 
-train_standalone_experiment(
-    exp_num=27,
-    epochs=1,
-    batch_size=24,
-    threshold=0.3
-)
+```bash
+./run_workflow.sh
 ```
 
-### 2. Train Complete Curriculum Sequence
+### 2. Train Complete Curriculum Sequence (Python)
 
 ```python
-from main_training import train_curriculum_sequence
+from train import train_curriculum_sequence
 
 train_curriculum_sequence(
     exp_num=28,
@@ -98,7 +102,7 @@ train_curriculum_sequence(
 
 ```python
 from config import ExperimentConfig
-from main_training import train_single_stage
+from train import train_single_stage
 
 exp_config = ExperimentConfig(
     exp_num=28,
@@ -170,44 +174,10 @@ The curriculum is organized by `dialect_sum` (number of dialects per sample):
 
 Each stage includes balanced samples from all previous stages.
 
-## Key Improvements in Organization
+## Notes on Running
 
-### 1. **Separation of Concerns**
-   - Training logic → `bert_trainer.py`
-   - Data preparation → `data_utils.py`
-   - Configuration → `config.py`
-   - Workflows → `main_training.py`
-
-### 2. **Code Reusability**
-   - Modular functions for common operations
-   - Configurable experiment settings
-   - Reusable data preparation utilities
-
-### 3. **Maintainability**
-   - Clear function/class documentation
-   - Logical code organization
-   - Constants defined in one place
-   - Descriptive variable names
-
-### 4. **Readability**
-   - Consistent code style
-   - Meaningful function names
-   - Reduced code duplication
-   - Clear workflow examples
-
-## What Was NOT Changed
-
-To preserve exact reproducibility:
-- ✅ All model architectures
-- ✅ All hyperparameters
-- ✅ All random seeds (42)
-- ✅ Data preprocessing logic
-- ✅ Training algorithms
-- ✅ Evaluation metrics
-- ✅ Loss functions
-- ✅ Tokenization settings
-- ✅ Optimizer settings
-- ✅ Curriculum construction logic
+- `main.py` mirrors the shell options and runs both data prep and training.
+- If you skip data preparation, make sure curriculum stages already exist in `./CL_stages`.
 
 ## Dependencies
 
@@ -238,28 +208,6 @@ exp_<exp_num>/
 - GPU training is automatically enabled if available
 - TensorBoard logs are written to `exp_<num>/logs/`
 
-## Migration from Original Code
-
-To migrate from the original notebook:
-
-1. **Replace cell 3-4** (standalone experiments) with:
-   ```python
-   from main_training import train_standalone_experiment
-   train_standalone_experiment(exp_num=27, epochs=1, batch_size=24)
-   ```
-
-2. **Replace cell 7** (data preparation) with:
-   ```python
-   from prepare_data import prepare_curriculum_data
-   prepare_curriculum_data(dataset_path, output_dir)
-   ```
-
-3. **Replace cell 9** (curriculum loop) with:
-   ```python
-   from main_training import train_curriculum_sequence
-   train_curriculum_sequence(exp_num=28, start_stage=1, end_stage=15)
-   ```
-
 ## Contact
 
-For questions about the implementation, refer to the original code or contact the development team.
+For questions about the implementation, refer to the code or contact the development team.

@@ -206,8 +206,6 @@ class BertTrainer:
         else:
             dev = pd.read_csv(dev_path)
         
-        from preprocess import final_eliminations
-        dev = final_eliminations(dev, column_name="sentence")
         
         # Prepare labels
         df_replaced = dev.replace({'y': 1, 'n': 0})
@@ -230,7 +228,7 @@ class BertTrainer:
     def _save_predictions(self, predictions):
         """Save predictions to output file."""
         output_dir = f'./exp_{self.exp_num}'
-        output_file = output_dir + "/output.txt"
+        output_file = output_dir + f"/output_{self.stage}.txt"
         os.makedirs(output_dir, exist_ok=True)
         
         with open(output_file, 'w') as f:

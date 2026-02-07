@@ -16,7 +16,9 @@ def prepare_curriculum_data(
     dataset_path,
     output_dir,
     stage_levels=None,
-    computed_filter=True
+    computed_filter=False,
+    cl_method=1,
+    seed=42
 ):
     """
     Prepare all curriculum learning stages from the main dataset.
@@ -34,7 +36,7 @@ def prepare_curriculum_data(
     print(f"Dialect sum distribution:\n{dataset['dialect_sum'].value_counts().sort_index()}\n")
     
     print("Creating curriculum learning stages...")
-    stage_paths = prepare_all_curriculum_stages(dataset, output_dir, stage_levels)
+    stage_paths = prepare_all_curriculum_stages(dataset, output_dir, stage_levels, cl_method=cl_method, seed=seed)
     
     print(f"\nSuccessfully created {len(stage_paths)} curriculum stages.")
     return stage_paths
