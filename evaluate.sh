@@ -4,7 +4,7 @@
 
 SCORER="evaluation/NADI2024-ST1-Scorer.py"
 GOLD="evaluation/NADI2024_subtask1_dev2_gold.txt"
-PREDICTIONS="/home/mohamed.elzeftawy/Documents/b2bert_cl/exp_14/output_2.txt"
+PREDICTIONS="./exp_14/output_2.txt"
 
 if [ -z "$PREDICTIONS" ]; then
     echo "Usage: $0 <predictions_file>"
